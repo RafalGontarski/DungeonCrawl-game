@@ -52,22 +52,22 @@ public class Main extends Application {
 
     private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-            case UP:
+            case UP -> {
                 map.getPlayer().move(0, -1);
                 refresh();
-                break;
-            case DOWN:
+            }
+            case DOWN -> {
                 map.getPlayer().move(0, 1);
                 refresh();
-                break;
-            case LEFT:
+            }
+            case LEFT -> {
                 map.getPlayer().move(-1, 0);
                 refresh();
-                break;
-            case RIGHT:
-                map.getPlayer().move(1,0);
+            }
+            case RIGHT -> {
+                map.getPlayer().move(1, 0);
                 refresh();
-                break;
+            }
         }
     }
 
