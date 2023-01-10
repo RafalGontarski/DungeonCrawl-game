@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.ActorType;
 
 public class Cell implements Drawable {
     private CellType type;
@@ -36,8 +37,8 @@ public class Cell implements Drawable {
     }
 
     @Override
-    public String getTileName() {
-        return type.getTileName();
+    public ActorType getTileName() {
+        return ActorType.PLAYER;
     }
 
     public int getX() {
