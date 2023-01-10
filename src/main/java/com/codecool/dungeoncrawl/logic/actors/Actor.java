@@ -4,11 +4,13 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.Drawable;
 
 public abstract class Actor implements Drawable {
+    private final ActorType actorType;
     private Cell cell;
     private int health = 10;
 
-    public Actor(Cell cell) {
+    public Actor(Cell cell, ActorType actorType) {
         this.cell = cell;
+        this.actorType = actorType;
         this.cell.setActor(this);
     }
 
@@ -17,6 +19,11 @@ public abstract class Actor implements Drawable {
         cell.setActor(null);
         nextCell.setActor(this);
         cell = nextCell;
+    }
+
+    @Override
+    public String getTileName() {
+        return actorType.getTileName();
     }
 
     public int getHealth() {
