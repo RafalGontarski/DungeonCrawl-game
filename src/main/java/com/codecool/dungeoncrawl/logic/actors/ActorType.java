@@ -4,9 +4,9 @@ public enum ActorType {
     PLAYER("player"),
     SKELETON("skeleton");
 
-    private String _tileName;
+    private final String _tileName;
 
-    ActorType(String tileName) {
+    public ActorType(String tileName) {
         this._tileName = tileName;
     }
 

@@ -11,6 +11,7 @@ import java.awt.*;
 public class Actor extends Rectangle implements Drawable {
     protected Cell cell;
     private CellType cellType;
+    private ActorType actorType;
     protected int health = 10;
 
     protected byte actorID;
@@ -24,22 +25,23 @@ public class Actor extends Rectangle implements Drawable {
 
     protected RandomHelper.Direction facing;
 
-    public Actor(Cell cell) {
+    public Actor(Cell cell, ActorType actorType) {
         this.cell = cell;
+        this.actorType = actorType;
         this.cell.setActor(this);
     }
 
-    public Actor(CellType cellType, int posXinRoom, int posYinRoom) {
-        super(posXinRoom* Tiles.TILE_WIDTH, posYinRoom*Tiles.TILE_WIDTH, Tiles.TILE_WIDTH, Tiles.TILE_WIDTH);
-        this.cellType = cellType;
-//        this.actorID = id;
-        this.up = false;
-        this.down = false;
-        this.left = false;
-        this.right = false;
-        this.speed = 5;
-        this.facing = RandomHelper.Direction.SOUTH;
-    }
+//    public Actor(CellType, int posXinRoom, int posYinRoom) {
+//        super(posXinRoom* Tiles.TILE_WIDTH, posYinRoom*Tiles.TILE_WIDTH, Tiles.TILE_WIDTH, Tiles.TILE_WIDTH);
+//        this.cellType = cellType;
+////        this.actorID = id;
+//        this.up = false;
+//        this.down = false;
+//        this.left = false;
+//        this.right = false;
+//        this.speed = 5;
+//        this.facing = RandomHelper.Direction.SOUTH;
+//    }
 
     public void move(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
@@ -65,6 +67,10 @@ public class Actor extends Rectangle implements Drawable {
         }
     }
 
+    public CellType getCellType() {
+        return cellType;
+    }
+
     public int getHealth() {
         return health;
     }
@@ -81,8 +87,17 @@ public class Actor extends Rectangle implements Drawable {
         return cell.getY();
     }
 
+    public void setActorType(ActorType actorType) {
+        this.actorType = actorType;
+    }
+
     @Override
-    public ActorType getTileName() {
+    public String getTileName() {
+        if (cellType.equals(ActorType.PLAYER)) {
+            return String.valueOf(ActorType.PLAYER);
+        } else if (cellType.equals(ActorType.SKELETON)) {
+            return String.valueOf(ActorType.SKELETON);
+        }
         return null;
     }
 }

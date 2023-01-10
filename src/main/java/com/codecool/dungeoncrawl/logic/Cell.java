@@ -37,8 +37,8 @@ public class Cell implements Drawable {
     }
 
     @Override
-    public ActorType getTileName() {
-        return ActorType.PLAYER;
+    public String getTileName() {
+        return String.valueOf(ActorType.PLAYER);
     }
 
     public int getX() {

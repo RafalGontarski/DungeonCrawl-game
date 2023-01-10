@@ -5,12 +5,13 @@ import com.codecool.dungeoncrawl.logic.CellType;
 
 public class Player extends Actor {
     private CellType cellType;
+    private ActorType actorType;
     private int hp;
     private int maxHp;
     private byte attackTime;
 
-    public Player(Cell cell) {
-        super(cell);
+    public Player(Cell cell, ActorType actorType) {
+        super(cell, actorType);
     }
 
 //    public Player() {
@@ -41,7 +42,7 @@ public class Player extends Actor {
 //        }
 //    }
 
-    public ActorType getTileName() {
-        return ActorType.PLAYER;
+    public String getTileName() {
+        return String.valueOf(ActorType.PLAYER);
     }
 }

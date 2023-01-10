@@ -3,12 +3,12 @@ package com.codecool.dungeoncrawl.logic.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 
 public class Skeleton extends Actor {
-    public Skeleton(Cell cell) {
-        super(cell);
+    public Skeleton(Cell cell, ActorType type) {
+        super(cell, type);
     }
 
     @Override
-    public ActorType getTileName() {
-        return ActorType.SKELETON;
+    public String getTileName() {
+        return String.valueOf(ActorType.SKELETON);
     }
 }
