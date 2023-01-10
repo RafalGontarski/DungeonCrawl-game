@@ -1,8 +1,10 @@
 package com.codecool.dungeoncrawl;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.actors.Player;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -51,38 +53,68 @@ public class Main extends Application {
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
+        Player player = map.getPlayer();
         switch (keyEvent.getCode()) {
             case UP:
-                map.getPlayer().move(0, -1);
-                refresh();
+                player.move(0, -1);
                 break;
             case DOWN:
-                map.getPlayer().move(0, 1);
-                refresh();
+                player.move(0, 1);
                 break;
             case LEFT:
-                map.getPlayer().move(-1, 0);
-                refresh();
+                player.move(-1, 0);
                 break;
             case RIGHT:
-                map.getPlayer().move(1,0);
-                refresh();
+                player.move(1,0);
                 break;
         }
+        refresh();
     }
 
+//    private void refresh() {
+//        context.setFill(Color.BLACK);
+//        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+//        for (int x = 0; x < map.getWidth(); x++) {
+//            for (int y = 0; y < map.getHeight(); y++) {
+//                Cell cell = map.getCell(x, y);
+//                if (cell.getActor() != null) {
+//                    Tiles.drawTile(context, cell.getActor(), x, y);
+//                } else {
+//                    Tiles.drawTile(context, cell, x, y);
+//                }
+//            }
+//        }
+//        healthLabel.setText("" + map.getPlayer().getHealth());
+//    }
     private void refresh() {
+        Player player = MapLoader.getPlayer();
+
+        int halfWidth = map.getWidth() / 2;
+        int halfHeight = map.getHeight() / 2;
+        int mapRowDiff = player.getX() -  halfWidth;
+        int startX = player.getX() - halfWidth;
+        int startY = player.getY() - halfHeight;
+        int endX = player.getX() + halfWidth;
+        int endY = player.getY() + halfHeight;
+
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
-                Cell cell = map.getCell(x, y);
-                if (cell.getActor() != null) {
-                    Tiles.drawTile(context, cell.getActor(), x, y);
+
+        for (int x = startX; x < endX; x++ ){
+            for (int y = startY; y < endY; y++){
+                if (x >= 0 && y >= 0 && x < map.getWidth() && y < map.getHeight()) {
+                    Cell cell = map.getCell(x, y);
+                    if (cell.getActor() != null) {
+                        //player Tile 28, 0
+                        Tiles.drawTile(context, cell.getActor(), x, y);
+                    } else {
+                        Tiles.drawTile(context, cell, x, y);
+                    }
                 } else {
-                    Tiles.drawTile(context, cell, x, y);
+                    Tiles.drawTile(context, new Cell(map, x, y, CellType.EMPTY), x, y);
                 }
             }
+            mapRowDiff++;
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
     }
