@@ -2,6 +2,9 @@ package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
+import com.codecool.dungeoncrawl.logic.mapobjects.ClosedDoor;
+import com.codecool.dungeoncrawl.logic.mapobjects.OpenDoor;
+import com.codecool.dungeoncrawl.logic.items.Key;
 
 import java.io.InputStream;
 import java.util.Scanner;
@@ -34,6 +37,18 @@ public class MapLoader {
                         case 's':
                             cell.setType(CellType.FLOOR);
                             new Skeleton(cell);
+                            break;
+                        case 'k':
+                            cell.setType(CellType.FLOOR);
+                            new Key(cell);
+                            break;
+                        case 'o':
+                            cell.setType(CellType.FLOOR);
+                            new OpenDoor(cell);
+                            break;
+                        case 'c':
+                            cell.setType(CellType.FLOOR);
+                            new ClosedDoor(cell);
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
