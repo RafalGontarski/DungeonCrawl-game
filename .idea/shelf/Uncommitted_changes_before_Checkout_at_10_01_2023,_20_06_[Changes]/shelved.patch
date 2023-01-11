@@ -1,0 +1,106 @@
+Index: src/main/java/com/codecool/dungeoncrawl/logic/actors/Actor.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.codecool.dungeoncrawl.logic.actors;\n\nimport com.codecool.dungeoncrawl.Tiles;\nimport com.codecool.dungeoncrawl.logic.Cell;\nimport com.codecool.dungeoncrawl.logic.CellType;\nimport com.codecool.dungeoncrawl.logic.Drawable;\nimport com.codecool.dungeoncrawl.logic.utils.RandomHelper;\n\nimport java.awt.*;\n\npublic class Actor extends Rectangle implements Drawable {\n    protected Cell cell;\n    private CellType cellType;\n    private ActorType actorType;\n    protected int health = 10;\n\n    protected byte actorID;\n\n    protected boolean up;\n    protected boolean down;\n    protected boolean left;\n    protected boolean right;\n\n    protected int speed;\n\n    protected RandomHelper.Direction facing;\n\n    public Actor(Cell cell, ActorType actorType) {\n        this.cell = cell;\n        this.actorType = actorType;\n        this.cell.setActor(this);\n    }\n\n//    public Actor(CellType, int posXinRoom, int posYinRoom) {\n//        super(posXinRoom* Tiles.TILE_WIDTH, posYinRoom*Tiles.TILE_WIDTH, Tiles.TILE_WIDTH, Tiles.TILE_WIDTH);\n//        this.cellType = cellType;\n////        this.actorID = id;\n//        this.up = false;\n//        this.down = false;\n//        this.left = false;\n//        this.right = false;\n//        this.speed = 5;\n//        this.facing = RandomHelper.Direction.SOUTH;\n//    }\n\n    public void move(int dx, int dy) {\n        Cell nextCell = cell.getNeighbor(dx, dy);\n        cell.setActor(null);\n        nextCell.setActor(this);\n        cell = nextCell;\n\n        if(up) {\n            super.y-=this.speed;\n            this.facing = RandomHelper.Direction.NORTH;\n        }\n        if(down) {\n            super.y+=this.speed;\n            this.facing = RandomHelper.Direction.SOUTH;\n        }\n        if(left) {\n            super.x-=this.speed;\n            this.facing = RandomHelper.Direction.WEST;\n        }\n        if(right) {\n            super.x+=this.speed;\n            this.facing = RandomHelper.Direction.EAST;\n        }\n    }\n\n    public CellType getCellType() {\n        return cellType;\n    }\n\n    public int getHealth() {\n        return health;\n    }\n\n    public Cell getCell() {\n        return cell;\n    }\n\n    public double getX() {\n        return cell.getX();\n    }\n\n    public double getY() {\n        return cell.getY();\n    }\n\n    public void setActorType(ActorType actorType) {\n        this.actorType = actorType;\n    }\n\n    @Override\n    public String getTileName() {\n        if (cellType.equals(ActorType.PLAYER)) {\n            return String.valueOf(ActorType.PLAYER);\n        } else if (cellType.equals(ActorType.SKELETON)) {\n            return String.valueOf(ActorType.SKELETON);\n        }\n        return null;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/codecool/dungeoncrawl/logic/actors/Actor.java b/src/main/java/com/codecool/dungeoncrawl/logic/actors/Actor.java
+--- a/src/main/java/com/codecool/dungeoncrawl/logic/actors/Actor.java	
++++ b/src/main/java/com/codecool/dungeoncrawl/logic/actors/Actor.java	
+@@ -1,77 +1,31 @@
+ package com.codecool.dungeoncrawl.logic.actors;
+ 
+-import com.codecool.dungeoncrawl.Tiles;
+ import com.codecool.dungeoncrawl.logic.Cell;
+-import com.codecool.dungeoncrawl.logic.CellType;
+ import com.codecool.dungeoncrawl.logic.Drawable;
+-import com.codecool.dungeoncrawl.logic.utils.RandomHelper;
+ 
+-import java.awt.*;
+-
++public abstract class Actor implements Drawable {
++    private Cell cell;
+ public class Actor extends Rectangle implements Drawable {
+     protected Cell cell;
+     private CellType cellType;
+     private ActorType actorType;
+     protected int health = 10;
+ 
+-    protected byte actorID;
+-
+-    protected boolean up;
+-    protected boolean down;
+-    protected boolean left;
+-    protected boolean right;
+-
+-    protected int speed;
+-
+-    protected RandomHelper.Direction facing;
+-
+-    public Actor(Cell cell, ActorType actorType) {
++    public Actor(Cell cell) {
+         this.cell = cell;
+         this.actorType = actorType;
+         this.cell.setActor(this);
+     }
+ 
+-//    public Actor(CellType, int posXinRoom, int posYinRoom) {
+-//        super(posXinRoom* Tiles.TILE_WIDTH, posYinRoom*Tiles.TILE_WIDTH, Tiles.TILE_WIDTH, Tiles.TILE_WIDTH);
+-//        this.cellType = cellType;
+-////        this.actorID = id;
+-//        this.up = false;
+-//        this.down = false;
+-//        this.left = false;
+-//        this.right = false;
+-//        this.speed = 5;
+-//        this.facing = RandomHelper.Direction.SOUTH;
+-//    }
+-
+     public void move(int dx, int dy) {
+         Cell nextCell = cell.getNeighbor(dx, dy);
+         cell.setActor(null);
+         nextCell.setActor(this);
+         cell = nextCell;
+-
+-        if(up) {
+-            super.y-=this.speed;
+-            this.facing = RandomHelper.Direction.NORTH;
+-        }
+-        if(down) {
+-            super.y+=this.speed;
+-            this.facing = RandomHelper.Direction.SOUTH;
+-        }
+-        if(left) {
+-            super.x-=this.speed;
+-            this.facing = RandomHelper.Direction.WEST;
+-        }
+-        if(right) {
+-            super.x+=this.speed;
+-            this.facing = RandomHelper.Direction.EAST;
+-        }
+-    }
+-
+-    public CellType getCellType() {
+-        return cellType;
+     }
+ 
+     public int getHealth() {
++        int health = 10;
+         return health;
+     }
+ 
+@@ -79,11 +33,11 @@
+         return cell;
+     }
+ 
+-    public double getX() {
++    public int getX() {
+         return cell.getX();
+     }
+ 
+-    public double getY() {
++    public int getY() {
+         return cell.getY();
+     }
+ 
