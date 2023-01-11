@@ -1,16 +1,16 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 public enum ActorType {
-    SKELETON("skeleton"),
-    PLAYER("player");
+    PLAYER("player"),
+    SKELETON("skeleton");
 
-    private final String tileName;
+    private final String _tileName;
 
     ActorType(String tileName) {
-        this.tileName = tileName;
+        this._tileName = tileName;
     }
 
     public String getTileName() {
-        return tileName;
+        return _tileName;
     }
 }
