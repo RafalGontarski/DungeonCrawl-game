@@ -91,6 +91,7 @@ public class Main extends Application {
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
-        inventory.setText("" + map.getPlayer().getInventory());
+        inventory.setText("" + map.getPlayer().getItemNames());
+        map.getPlayer().checkPickUp();
     }
 }
