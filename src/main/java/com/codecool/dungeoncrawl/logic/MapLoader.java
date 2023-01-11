@@ -15,6 +15,7 @@ public class MapLoader {
 
         scanner.nextLine(); // empty line
 
+
         GameMap map = new GameMap(width, height, CellType.EMPTY);
         for (int y = 0; y < height; y++) {
             String line = scanner.nextLine();
