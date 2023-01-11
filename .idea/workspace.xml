@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7eb421fb-d12e-43e6-8b28-0d01cf1b5b74" name="Changes" comment="">
+    <list default="true" id="7eb421fb-d12e-43e6-8b28-0d01cf1b5b74" name="Changes" comment="test">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/map2.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/codecool/dungeoncrawl/logic/CellType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codecool/dungeoncrawl/logic/CellType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/codecool/dungeoncrawl/logic/actors/Actor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codecool/dungeoncrawl/logic/actors/Actor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -62,6 +64,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Eteer\Desktop\CODECOOL_PROJEKTY\CODECOOL_ZADANIA\module 3\week 3\zadanie 5 grupowe\dungeon-crawl-1-java-RafalGontarski\src\main\resources" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -72,7 +79,8 @@
       <updated>1673294702381</updated>
       <workItem from="1673294703739" duration="65000" />
       <workItem from="1673345760558" duration="5010000" />
-      <workItem from="1673428850304" duration="707000" />
+      <workItem from="1673428850304" duration="1056000" />
+      <workItem from="1673437579557" duration="2743000" />
     </task>
     <servers />
   </component>
