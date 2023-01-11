@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.Tiles;
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Drawable;
 import com.codecool.dungeoncrawl.logic.utils.MathHelper;
 
@@ -48,9 +49,13 @@ public class Actor extends Rectangle implements Drawable {
     public void move(int dx, int dy) {
 
         Cell nextCell = cell.getNeighbor(dx, dy);
-        cell.setActor(null);
-        nextCell.setActor(this);
-        cell = nextCell;
+        if(nextCell.getType() != CellType.WALL){
+            if(nextCell.getActor() == null){
+                cell.setActor(null);
+                nextCell.setActor(this);
+                cell = nextCell;
+            }
+        }
 
 
         if(up) {
