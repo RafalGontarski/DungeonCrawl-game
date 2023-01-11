@@ -6,28 +6,24 @@ import com.codecool.dungeoncrawl.logic.GameMap;
 import java.util.Random;
 
 public class Skeleton extends Actor {
+    private Cell cell;
     private Random random;
     public Skeleton(Cell cell) {
         super(cell);
     }
 
+    @Override
     public void move() {
-
         GameMap map = cell.getGameMap();
         Player player = map.getPlayer();
         Cell playerCell = player.cell;
-
         while(true){
-
             int[][] coordsDifferentials = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
             int[] diff = coordsDifferentials[random.nextInt(coordsDifferentials.length)];
-
             if (!cell.hasNeighbor(diff[0], diff[1])){
                 continue;
             }
-
             Cell next = cell.getNeighbor(diff[0], diff[1]);
-
             if (next.getActor() == null
                     && !map.getObstacles().contains(next.getType())) {
                 changeCell(diff[0], diff[1]);
@@ -37,6 +33,14 @@ public class Skeleton extends Actor {
                 break;
             }
         }
+    }
+
+
+    public void changeCell(int dx, int dy) {
+        Cell nextCell = cell.getNeighbor(dx, dy);
+        cell.setActor(null);
+        nextCell.setActor(this);
+        cell = nextCell;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.actors.Actor;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -23,6 +24,14 @@ import java.awt.event.MouseEvent;
 
 public class Main extends Application {
     GameMap map = MapLoader.loadMap();
+
+
+    int left = 10;
+    int right = 10;
+    int up = 10;
+    int down = 10;
+    int height = 10;
+
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
             map.getHeight() * Tiles.TILE_WIDTH);
@@ -46,7 +55,7 @@ public class Main extends Application {
         ui.add(new Label("Health: "), 0, 0);
         ui.add(new Label("Damage: "), 0, 1);
         ui.add(new Label("Inventory: "), 0, 2);
-        ui.add(button,4, 0);
+        ui.add(button, 4, 0);
         ui.add(healthLabel, 1, 0);
         ui.add(damageLabel, 1, 1);
         ui.add(inventory, 1, 2);
@@ -86,31 +95,42 @@ public class Main extends Application {
                 refresh();
                 break;
             case RIGHT:
-                map.getPlayer().move(1,0);
+                map.getPlayer().move(1, 0);
                 refresh();
                 break;
         }
+        map.getMobs().forEach(Actor::move);
     }
 
     private void refresh() {
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (int x = 0; x < map.getWidth(); x++) {
-            for (int y = 0; y < map.getHeight(); y++) {
-                Cell cell = map.getCell(x, y);
-                if (cell.getActor() != null) {
-                    Tiles.drawTile(context, cell.getActor(), x, y);
-                } else if (cell.getItem() != null) {
-                    Tiles.drawTile(context, cell.getItem(), x, y);
-                }
-                else {
-                    Tiles.drawTile(context, cell, x, y);
+        Cell playerCell = map.getPlayer().getCell();
+
+//        for (int x = 0; x < map.getWidth(); x++) {
+//            for (int y = 0; y < map.getHeight(); y++) {
+        for (int x = playerCell.getX() - left; x <= playerCell.getX() + right; x++) {
+            for (int y = playerCell.getY() - height; y <= playerCell.getY() + height; y++) {
+                int canvaX = x - playerCell.getX() + left;
+                int canvaY = y - playerCell.getY() + up;
+                if (0 <= x && x < map.getWidth() && 0 <= y && y < map.getHeight()) {
+                    Cell cell = map.getCell(x, y);
+
+                    if (cell.getActor() != null) {
+                        Tiles.drawTile(context, cell.getActor(), canvaX, canvaY);
+                    } else if (cell.getItem() != null) {
+                        Tiles.drawTile(context, cell.getItem(), canvaX, canvaY);
+                    } else {
+                        Tiles.drawTile(context, cell, canvaX, canvaY);
+                    }
+                } else {
+                    Tiles.drawTile(context, new Cell(), canvaX, canvaY);
                 }
             }
+            healthLabel.setText("" + map.getPlayer().getHealth());
+            damageLabel.setText("" + map.getPlayer().getDamage());
+            inventory.setText("" + map.getPlayer().getItemNames());
+            button.setFocusTraversable(false);
         }
-        healthLabel.setText("" + map.getPlayer().getHealth());
-        damageLabel.setText("" + map.getPlayer().getDamage());
-        inventory.setText("" + map.getPlayer().getItemNames());
-        button.setFocusTraversable(false);
     }
 }
