@@ -2,11 +2,18 @@ package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actors.Player;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 public class GameMap {
     private int width;
     private int height;
     private Cell[][] cells;
     private Player player;
+
+    private final List<CellType> obstacles = Arrays.asList(CellType.WALL, CellType.CLOSE);
+
 
     public GameMap(int width, int height, CellType defaultCellType) {
         this.width = width;
@@ -37,5 +44,9 @@ public class GameMap {
 
     public int getHeight() {
         return height;
+    }
+
+    public List<CellType> getObstacles() {
+        return obstacles;
     }
 }
