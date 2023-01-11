@@ -10,8 +10,8 @@ import java.util.Map;
 public class Tiles {
     public static int TILE_WIDTH = 32;
 
-    private static final Image tileset = new Image("/tiles.png", 543 * 2, 543 * 2, true, false);
-    private static final Map<String, Tile> tileMap = new HashMap<>();
+    private static Image tileset = new Image("/tiles.png", 543 * 2, 543 * 2, true, false);
+    private static Map<String, Tile> tileMap = new HashMap<>();
     public static class Tile {
         public final int x, y, w, h;
         Tile(int i, int j) {
@@ -29,8 +29,7 @@ public class Tiles {
         tileMap.put("player", new Tile(27, 0));
         tileMap.put("skeleton", new Tile(29, 6));
         tileMap.put("sword", new Tile(0, 30));
-        tileMap.put("closeddoor", new Tile(4, 9));
-        tileMap.put("opendoor", new Tile(6, 9));
+        tileMap.put("lightArmor", new Tile(6, 23));
 
     }
 

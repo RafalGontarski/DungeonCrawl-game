@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f58b9b5f-b307-4d17-891f-232dfcf2c753" name="Changes" comment="map follows player implemented">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_win_19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_controls_win_19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_win_19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/codecool/dungeoncrawl/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codecool/dungeoncrawl/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/codecool/dungeoncrawl/logic/MapLoader.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/codecool/dungeoncrawl/logic/MapLoader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/codecool/dungeoncrawl/logic/actors/ActorType.class" beforeDir="false" />
-    </list>
+    <list default="true" id="f58b9b5f-b307-4d17-891f-232dfcf2c753" name="Changes" comment="&lt;item&gt;&#10;pick up &amp; add items to inventory working" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,18 +13,18 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="Monster_attack" />
+    <option name="BRANCH" value="Items" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Monster_attack" />
+        <entry key="$PROJECT_DIR$" value="Items" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -48,9 +40,7 @@
     </option>
   </component>
   <component name="ProjectId" id="2K6UoaymOEYskdHYavskXo0V3Nc" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -71,40 +61,6 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.App">
-    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.codecool.dungeoncrawl.App" />
-      <module name="dungeon-crawl" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.codecool.dungeoncrawl.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.codecool.dungeoncrawl.Main" />
-      <module name="dungeon-crawl" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.codecool.dungeoncrawl.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.App" />
-        <item itemvalue="Application.Main" />
-      </list>
-    </recent_temporary>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -151,12 +107,12 @@
       <option name="project" value="LOCAL" />
       <updated>1673434273804</updated>
     </task>
-    <task id="LOCAL-00006" summary="map follows player implemented">
-      <created>1673451054247</created>
+    <task id="LOCAL-00006" summary="&lt;item&gt;&#10;armor and health increase added">
+      <created>1673451294377</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1673451054247</updated>
+      <updated>1673451294377</updated>
     </task>
     <option name="localTasksCounter" value="7" />
     <servers />
@@ -178,7 +134,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test" />
     <MESSAGE value="&lt;item&gt;&#10;pick up &amp; add items to inventory working" />
-    <MESSAGE value="map follows player implemented" />
-    <option name="LAST_COMMIT_MESSAGE" value="map follows player implemented" />
+    <MESSAGE value="&lt;item&gt;&#10;armor and health increase added" />
+    <option name="LAST_COMMIT_MESSAGE" value="&lt;item&gt;&#10;armor and health increase added" />
   </component>
 </project>
