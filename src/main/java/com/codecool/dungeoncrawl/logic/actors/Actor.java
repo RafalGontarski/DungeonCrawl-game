@@ -45,7 +45,14 @@ public class Actor extends Rectangle implements Drawable {
         this.actorType = getActorType();
     }
 
-    public void move() {
+    public void move(int dx, int dy) {
+
+        Cell nextCell = cell.getNeighbor(dx, dy);
+        cell.setActor(null);
+        nextCell.setActor(this);
+        cell = nextCell;
+
+
         if(up) {
             super.y-=this.speed;
             this.facing = MathHelper.Direction.NORTH;
