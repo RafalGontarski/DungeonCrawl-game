@@ -26,8 +26,8 @@ public class Main extends Application {
     GameMap map = MapLoader.loadMap();
 
 
-    int left = 10;
-    int right = 10;
+    int left = 13;
+    int right = 13;
     int up = 10;
     int down = 10;
     int height = 10;
