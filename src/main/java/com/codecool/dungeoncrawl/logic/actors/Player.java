@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.items.Armor;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.logic.items.Weapon;
 
@@ -9,7 +10,6 @@ import java.util.List;
 
 public class Player extends Actor {
     private List<Item> inventory = new ArrayList<Item>();
-
     int damage = 5;
     public Player(Cell cell) {
         super(cell);
@@ -36,18 +36,18 @@ public class Player extends Actor {
     }
     public void checkPickUp(){
         if(this.getCell().getItem() != null){
-            System.out.println(this.getCell().getItem().getTileName());
             addToInventory(this.getCell().getItem());
-            this.increaseDamage();
+            this.increaseStatistics(this.getCell().getItem());
             this.getCell().getItem().removeItemFromMap(this.getCell());
         }
     }
-    public void increaseDamage(){
-       for(Item item: inventory){
+    public void increaseStatistics(Item item){
            if(item instanceof Weapon){
                this.damage = this.damage + ((Weapon) item).getDamage();
            }
-       }
+           else if(item instanceof Armor){
+               this.health = this.health + ((Armor) item).getHealth();
+           }
     }
     public String getTileName() {
         return "player";
