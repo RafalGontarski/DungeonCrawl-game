@@ -99,7 +99,7 @@ public class Main extends Application {
                 refresh();
                 break;
         }
-        map.getMobs().forEach(Actor::move);
+//        map.getMobs().forEach(Actor::move);
     }
 
     private void refresh() {
