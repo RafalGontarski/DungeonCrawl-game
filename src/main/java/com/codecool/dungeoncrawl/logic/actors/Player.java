@@ -15,6 +15,11 @@ public class Player extends Actor {
         super(cell);
     }
 
+    @Override
+    public void move() {
+
+    }
+
     public List<Item> getInventory(){
         return inventory;
     }
@@ -26,7 +31,7 @@ public class Player extends Actor {
     public List<String> getItemNames(){
         List<String> itemNames = new ArrayList<>();
         for (Item item : inventory)
-              {itemNames.add(item.getTileName());
+            {itemNames.add(item.getTileName());
         }
         return itemNames;
     }
@@ -42,12 +47,12 @@ public class Player extends Actor {
         }
     }
     public void increaseStatistics(Item item){
-           if(item instanceof Weapon){
-               this.damage = this.damage + ((Weapon) item).getDamage();
-           }
-           else if(item instanceof Armor){
-               this.health = this.health + ((Armor) item).getHealth();
-           }
+        if(item instanceof Weapon){
+            this.damage = this.damage + ((Weapon) item).getDamage();
+        }
+        else if(item instanceof Armor){
+            this.health = this.health + ((Armor) item).getHealth();
+        }
     }
     public String getTileName() {
         return "player";
