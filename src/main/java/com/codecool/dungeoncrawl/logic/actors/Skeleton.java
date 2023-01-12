@@ -12,7 +12,6 @@ public class Skeleton extends Actor {
         super(cell);
     }
 
-    @Override
     public void move() {
         GameMap map = cell.getGameMap();
         Player player = map.getPlayer();
