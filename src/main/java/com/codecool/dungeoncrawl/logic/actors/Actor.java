@@ -17,7 +17,6 @@ public abstract class Actor implements Drawable {
         Cell nextCell = cell.getNeighbor(dx, dy);
         if (nextCell.getType() != CellType.WALL) {
             if(nextCell.getType() != CellType.CLOSEDDOOR) {
-                nextCell.setType(CellType.FLOOR);
                 if (nextCell.getActor() == null) {
                     cell.setActor(null);
                     nextCell.setActor(this);
@@ -25,9 +24,21 @@ public abstract class Actor implements Drawable {
                 }
             }
         }
+        if(nextCell.getType() == CellType.CLOSEDDOOR) {
+            nextCell.setType(CellType.OPENDOOR);
+        }
+        if(nextCell.getType() == CellType.UPSTAIRS){
+            cell.getGameMap().getMain().upperLevel();
+        }
+        if(nextCell.getType() == CellType.DOWNSTAIRS){
+            cell.getGameMap().getMain().lowerLevel();
+        }
     }
 
     public abstract void move();
+
+
+
 
     public int getHealth() {
         return health;

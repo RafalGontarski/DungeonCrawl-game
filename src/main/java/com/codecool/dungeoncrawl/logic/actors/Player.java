@@ -57,4 +57,10 @@ public class Player extends Actor {
     public String getTileName() {
         return "player";
     }
+
+    public void setAttribute(List<Item> inventory, int health,int damage){
+        this.inventory = inventory;
+        this.health = health;
+        this.damage = damage;
+    }
 }

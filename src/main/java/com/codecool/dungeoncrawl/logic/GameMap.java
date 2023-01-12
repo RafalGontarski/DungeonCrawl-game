@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.Main;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 
@@ -12,14 +13,17 @@ public class GameMap {
     private int width;
     private int height;
     private Cell[][] cells;
+
+    private Main main;
     private Player player;
 
     private final List<CellType> obstacles = Arrays.asList(CellType.WALL, CellType.CLOSEDDOOR);
 
 
-    public GameMap(int width, int height, CellType defaultCellType) {
+    public GameMap(int width, int height, CellType defaultCellType,Main main) {
         this.width = width;
         this.height = height;
+        this.main = main;
         cells = new Cell[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -47,6 +51,8 @@ public class GameMap {
     public int getHeight() {
         return height;
     }
+
+    public Main getMain(){ return main;}
 
     public List<CellType> getObstacles() {
         return obstacles;
