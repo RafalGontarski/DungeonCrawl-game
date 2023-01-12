@@ -37,7 +37,7 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             break;
                         case 'c':
-                            cell.setType(CellType.CLOSE);
+                            cell.setType(CellType.CLOSEDDOOR);
                             break;
                         case 's':
                             cell.setType(CellType.FLOOR);
@@ -54,6 +54,9 @@ public class MapLoader {
                         case '@':
                             cell.setType(CellType.FLOOR);
                             map.setPlayer(new Player(cell));
+                            break;
+                        case 'd':
+                            cell.setType(CellType.OPENDOOR);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

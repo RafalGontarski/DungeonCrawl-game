@@ -14,7 +14,7 @@ public class GameMap {
     private Cell[][] cells;
     private Player player;
 
-    private final List<CellType> obstacles = Arrays.asList(CellType.WALL, CellType.CLOSE);
+    private final List<CellType> obstacles = Arrays.asList(CellType.WALL, CellType.CLOSEDDOOR);
 
 
     public GameMap(int width, int height, CellType defaultCellType) {
