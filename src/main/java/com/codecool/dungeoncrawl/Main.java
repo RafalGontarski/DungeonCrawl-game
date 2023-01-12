@@ -32,6 +32,9 @@ public class Main extends Application {
     Label inventory = new Label();
     Button button = new Button("Pick up");
 
+    Canvas inventoryPane = new Canvas(100,250);
+    GraphicsContext inventoryGraph = inventoryPane.getGraphicsContext2D();
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -39,6 +42,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         GridPane ui = new GridPane();
+        inventoryGraph.setFill(Color.BLACK);
+        inventoryGraph.fillRect(0, 0, 100, 250);
+        ui.add(inventoryPane, 0, 7);
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
 
