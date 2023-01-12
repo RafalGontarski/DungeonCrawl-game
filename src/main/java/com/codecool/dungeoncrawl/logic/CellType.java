@@ -7,7 +7,14 @@ public enum CellType {
     CLOSEDDOOR("closeddoor"),
 
     OPENDOOR("opendoor"),
-    WALL("wall");
+
+    UPSTAIRS("upstairs"),
+    DOWNSTAIRS("downstairs"),
+    MAPLEWALL("maplewall"),
+    MAPLEWINDOW("maplewindow"),
+    TORCH("torch"),
+
+    STONEWALL("stonewall");
 
 
     private final String tileName;

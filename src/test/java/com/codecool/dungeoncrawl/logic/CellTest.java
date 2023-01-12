@@ -1,11 +1,12 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.Main;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CellTest {
-    GameMap map = new GameMap(3, 3, CellType.FLOOR);
+    GameMap map = new GameMap(3, 3, CellType.FLOOR, new Main());
 
     @Test
     void getNeighbor() {

@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.Player;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -21,10 +22,16 @@ import javafx.stage.Stage;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Main extends Application {
-    GameMap map = MapLoader.loadMap();
+    GameMap map;
 
+    List<GameMap> maps = new ArrayList<>();
+    int level;
+    List<String> levels = Arrays.asList("/map.txt","/map2.txt");
 
     int left = 13;
     int right = 13;
@@ -32,14 +39,19 @@ public class Main extends Application {
     int down = 10;
     int height = 10;
 
+    public Main() {
+        maps.add(MapLoader.loadMap(this, levels.get(level)));
+        this.map = maps.get(level);
+    }
     Canvas canvas = new Canvas(
-            map.getWidth() * Tiles.TILE_WIDTH,
-            map.getHeight() * Tiles.TILE_WIDTH);
+            25 * Tiles.TILE_WIDTH,
+            20 * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
     Label damageLabel = new Label();
     Label inventory = new Label();
     Button button = new Button("Pick up");
+
 
     public static void main(String[] args) {
         launch(args);
@@ -132,5 +144,26 @@ public class Main extends Application {
             inventory.setText("" + map.getPlayer().getItemNames());
             button.setFocusTraversable(false);
         }
+    }
+    public void addMap(GameMap map){
+        maps.add(map);
+    }
+    public void upperLevel(){
+        level++;
+        if(level >= maps.size()){
+            GameMap nowaMapa = MapLoader.loadMap(this,levels.get(level));
+            addMap(nowaMapa);
+            System.out.println(level);
+            System.out.println(maps.size());
+        }
+        this.map = maps.get(level);
+        Player player = maps.get(level-1).getPlayer();
+        map.getPlayer().setAttribute(player.getInventory(),player.getHealth(), player.getDamage());
+    }
+    public void lowerLevel(){
+        level--;
+        this.map = maps.get(level);
+        Player player = maps.get(level+1).getPlayer();
+        map.getPlayer().setAttribute(player.getInventory(),player.getHealth(), player.getDamage());
     }
 }

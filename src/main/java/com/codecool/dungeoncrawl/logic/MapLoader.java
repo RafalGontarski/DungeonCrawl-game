@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.Main;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
 import com.codecool.dungeoncrawl.logic.items.LightArmor;
@@ -10,17 +11,17 @@ import java.util.Scanner;
 
 public class MapLoader {
 
-    public static GameMap loadMap() {
+    public static GameMap loadMap(Main main, String filename) {
 
 
-        InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
+        InputStream is = MapLoader.class.getResourceAsStream(filename);
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
         int height = scanner.nextInt();
 
         scanner.nextLine(); // empty line
 
-        GameMap map = new GameMap(width, height, CellType.EMPTY);
+        GameMap map = new GameMap(width, height, CellType.EMPTY,main);
         for (int y = 0; y < height; y++) {
             String line = scanner.nextLine();
             for (int x = 0; x < width; x++) {
@@ -31,7 +32,7 @@ public class MapLoader {
                             cell.setType(CellType.EMPTY);
                             break;
                         case '#':
-                            cell.setType(CellType.WALL);
+                            cell.setType(CellType.STONEWALL);
                             break;
                         case '.':
                             cell.setType(CellType.FLOOR);
@@ -57,6 +58,21 @@ public class MapLoader {
                             break;
                         case 'd':
                             cell.setType(CellType.OPENDOOR);
+                            break;
+                        case '^':
+                            cell.setType(CellType.UPSTAIRS);
+                            break;
+                        case 'v':
+                            cell.setType(CellType.DOWNSTAIRS);
+                            break;
+                        case '%':
+                            cell.setType(CellType.MAPLEWALL);
+                            break;
+                        case 'w':
+                            cell.setType(CellType.MAPLEWINDOW);
+                            break;
+                        case 't':
+                            cell.setType(CellType.TORCH);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
