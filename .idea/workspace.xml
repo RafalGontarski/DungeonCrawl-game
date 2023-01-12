@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f58b9b5f-b307-4d17-891f-232dfcf2c753" name="Changes" comment="" />
+    <list default="true" id="7eb421fb-d12e-43e6-8b28-0d01cf1b5b74" name="Changes" comment="Merged with key and doors">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/codecool/dungeoncrawl/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codecool/dungeoncrawl/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/codecool/dungeoncrawl/logic/actors/Actor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/codecool/dungeoncrawl/logic/actors/Actor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/codecool/dungeoncrawl/logic/actors/Actor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/codecool/dungeoncrawl/logic/actors/Actor.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,17 +18,18 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="development" />
+    <option name="BRANCH" value="Items" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="development" />
+        <entry key="$PROJECT_DIR$" value="Items" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -92,7 +98,59 @@
       <updated>1673294702381</updated>
       <workItem from="1673294703739" duration="65000" />
       <workItem from="1673345760558" duration="5010000" />
+      <workItem from="1673428850304" duration="1056000" />
+      <workItem from="1673437579557" duration="7270000" />
     </task>
+    <task id="LOCAL-00001" summary="&lt;items&gt;&#10;1/2 inventory ready, still in progress">
+      <created>1673430539274</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1673430539274</updated>
+    </task>
+    <task id="LOCAL-00002" summary="check">
+      <created>1673430711082</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1673430711082</updated>
+    </task>
+    <task id="LOCAL-00003" summary="check">
+      <created>1673430733545</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1673430733545</updated>
+    </task>
+    <task id="LOCAL-00004" summary="check">
+      <created>1673431215548</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1673431215548</updated>
+    </task>
+    <task id="LOCAL-00005" summary="&lt;item&gt;&#10;pick up &amp; add items to inventory working">
+      <created>1673434273804</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1673434273804</updated>
+    </task>
+    <task id="LOCAL-00006" summary="&lt;item&gt;&#10;armor and health increase added">
+      <created>1673451294377</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1673451294377</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Merged with key and doors">
+      <created>1673453470532</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1673453470532</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -111,6 +169,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="&lt;item&gt;&#10;pick up &amp; add items to inventory working" />
+    <MESSAGE value="&lt;item&gt;&#10;armor and health increase added" />
+    <MESSAGE value="Merged with key and doors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merged with key and doors" />
   </component>
 </project>

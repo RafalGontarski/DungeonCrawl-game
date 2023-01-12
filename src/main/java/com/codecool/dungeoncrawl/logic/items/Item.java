@@ -11,6 +11,10 @@ public abstract class Item implements Drawable {
         this.cell.setItem(this);
     }
 
+    public void removeItemFromMap(Cell cell){
+        this.cell.setItem(null);
+    }
+
     public int getX() {
         return cell.getX();
     }

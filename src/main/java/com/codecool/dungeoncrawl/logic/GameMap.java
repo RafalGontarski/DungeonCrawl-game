@@ -1,12 +1,21 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Player;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 public class GameMap {
     private int width;
     private int height;
     private Cell[][] cells;
     private Player player;
+
+    private final List<CellType> obstacles = Arrays.asList(CellType.WALL, CellType.CLOSEDDOOR);
+
 
     public GameMap(int width, int height, CellType defaultCellType) {
         this.width = width;
@@ -37,5 +46,22 @@ public class GameMap {
 
     public int getHeight() {
         return height;
+    }
+
+    public List<CellType> getObstacles() {
+        return obstacles;
+    }
+
+    public List<Actor> getMobs() {
+        List<Actor> mobs = new ArrayList<>();
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (cells[x][y].getActor() != null
+                        && ! (cells[x][y].getActor() instanceof Player)) {
+                    mobs.add(cells[x][y].getActor());
+                }
+            }
+        }
+        return mobs;
     }
 }
