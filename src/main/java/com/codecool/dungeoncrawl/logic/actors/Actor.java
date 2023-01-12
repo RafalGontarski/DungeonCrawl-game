@@ -8,6 +8,7 @@ public abstract class Actor implements Drawable {
     protected Cell cell;
     int health = 10;
     int damage;
+
     public Actor(Cell cell) {
         this.cell = cell;
         this.cell.setActor(this);
@@ -23,15 +24,18 @@ public abstract class Actor implements Drawable {
                     nextCell.setActor(this);
                     cell = nextCell;
                 }
+                else if (nextCell.getActor() != null){
+                    this.fight(nextCell.getActor());
+                }
             }
         }
     }
 
-    public abstract void move();
-
     public int getHealth() {
         return health;
     }
+
+    public int getDamage() { return damage;}
 
     public Cell getCell() {
         return cell;
@@ -46,13 +50,25 @@ public abstract class Actor implements Drawable {
     }
 
     public void attack(Actor enemy){
-        enemy.health -= damage;
+        enemy.health -= this.getDamage();
+        System.out.println(this.getClass().getSimpleName() + " : " + this.health);
         System.out.println(enemy.getClass().getSimpleName() + " : " + enemy.health);
     }
 
     public void fight(Actor enemy) {
+        System.out.println(enemy);
         System.out.println(this.getClass().getSimpleName() + " vs " + enemy.getClass().getSimpleName());
-        if (health > 0) attack(enemy);
-        if (enemy.health > 0) enemy.attack(this);
+        attack(enemy);
+        enemy.attack(this);
+        if (enemy.health <= 0){
+            removeActorFromMap(enemy.getCell());
+        }
+        if(this.health <= 0){
+            removeActorFromMap(this.getCell());
+        }
+    }
+
+    public void removeActorFromMap(Cell cell){
+        cell.setActor(null);
     }
 }

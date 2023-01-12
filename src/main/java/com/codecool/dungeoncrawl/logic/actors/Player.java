@@ -9,16 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends Actor {
-    private List<Item> inventory = new ArrayList<Item>();
+
     int damage = 5;
+    private List<Item> inventory = new ArrayList<Item>();
     public Player(Cell cell) {
         super(cell);
     }
 
-    @Override
-    public void move() {
-
-    }
 
     public List<Item> getInventory(){
         return inventory;
