@@ -31,7 +31,7 @@ public class Main extends Application {
 
     List<GameMap> maps = new ArrayList<>();
     int level;
-    List<String> levels = Arrays.asList("/map.txt","/map2.txt");
+    List<String> levels = Arrays.asList("/map.txt","/map2.txt","/map3.txt");
 
     int left = 13;
     int right = 13;

@@ -29,7 +29,7 @@ public class Tiles {
         tileMap.put("player", new Tile(27, 0));
         tileMap.put("skeleton", new Tile(29, 6));
         tileMap.put("sword", new Tile(0, 30));
-        tileMap.put("lightArmor", new Tile(6, 23));
+        tileMap.put("lightArmor", new Tile(17, 25));
 
         tileMap.put("closeddoor", new Tile(4, 9));
         tileMap.put("opendoor", new Tile(6, 9));
@@ -41,6 +41,7 @@ public class Tiles {
         tileMap.put("maplewall", new Tile(13, 16));
         tileMap.put("maplewindow", new Tile(13, 15));
         tileMap.put("torch", new Tile(4, 15));
+        tileMap.put("stonefloor", new Tile(2, 12));
 
     }
 

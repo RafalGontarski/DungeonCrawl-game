@@ -74,6 +74,9 @@ public class MapLoader {
                         case 't':
                             cell.setType(CellType.TORCH);
                             break;
+                        case '+':
+                            cell.setType(CellType.STONEFLOOR);
+                            break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
                     }
