@@ -38,9 +38,9 @@ public class Tiles {
         tileMap.put("downstairs", new Tile(3, 6));
 
 
-//        tileMap.put("woodwall", new Tile(13, 16));
-//        tileMap.put("woodwindow", new Tile(13, 15));
-//        tileMap.put("torch", new Tile(4, 15));
+        tileMap.put("maplewall", new Tile(13, 16));
+        tileMap.put("maplewindow", new Tile(13, 15));
+        tileMap.put("torch", new Tile(4, 15));
 
     }
 

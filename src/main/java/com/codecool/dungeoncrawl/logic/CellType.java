@@ -10,8 +10,11 @@ public enum CellType {
 
     UPSTAIRS("upstairs"),
     DOWNSTAIRS("downstairs"),
+    MAPLEWALL("maplewall"),
+    MAPLEWINDOW("maplewindow"),
+    TORCH("torch"),
 
-    WALL("stonewall");
+    STONEWALL("stonewall");
 
 
     private final String tileName;

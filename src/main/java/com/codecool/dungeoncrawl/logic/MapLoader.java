@@ -32,7 +32,7 @@ public class MapLoader {
                             cell.setType(CellType.EMPTY);
                             break;
                         case '#':
-                            cell.setType(CellType.WALL);
+                            cell.setType(CellType.STONEWALL);
                             break;
                         case '.':
                             cell.setType(CellType.FLOOR);
@@ -64,6 +64,15 @@ public class MapLoader {
                             break;
                         case 'v':
                             cell.setType(CellType.DOWNSTAIRS);
+                            break;
+                        case '%':
+                            cell.setType(CellType.MAPLEWALL);
+                            break;
+                        case 'w':
+                            cell.setType(CellType.MAPLEWINDOW);
+                            break;
+                        case 't':
+                            cell.setType(CellType.TORCH);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
