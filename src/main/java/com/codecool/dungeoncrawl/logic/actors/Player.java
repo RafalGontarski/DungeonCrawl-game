@@ -9,16 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends Actor {
-    private List<Item> inventory = new ArrayList<Item>();
+
     int damage = 5;
+    private List<Item> inventory = new ArrayList<Item>();
     public Player(Cell cell) {
         super(cell);
     }
 
-    @Override
-    public void move() {
-
-    }
 
     public List<Item> getInventory(){
         return inventory;
@@ -56,5 +53,11 @@ public class Player extends Actor {
     }
     public String getTileName() {
         return "player";
+    }
+
+    public void setAttribute(List<Item> inventory, int health,int damage){
+        this.inventory = inventory;
+        this.health = health;
+        this.damage = damage;
     }
 }
