@@ -6,6 +6,7 @@ import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -27,23 +28,15 @@ import java.util.List;
 
 public class Main extends Application {
     GameMap map;
-
     List<GameMap> maps = new ArrayList<>();
-    int level;
     List<String> levels = Arrays.asList("/map.txt","/map2.txt","/map3.txt");
-
+    int level;
     int left = 13;
     int right = 13;
     int up = 10;
     int down = 10;
     int height = 10;
     private Window parentStage;
-    private Actor actor;
-
-    public Main() {
-        maps.add(MapLoader.loadMap(this, levels.get(level)));
-        this.map = maps.get(level);
-    }
     Canvas canvas = new Canvas(
             25 * Tiles.TILE_WIDTH,
             20 * Tiles.TILE_WIDTH);
@@ -51,29 +44,37 @@ public class Main extends Application {
     Label healthLabel = new Label();
     Label damageLabel = new Label();
     Label inventory = new Label();
+    Label fight = new Label();
     Button button = new Button("Pick up");
 
-
+    public Main() {
+        maps.add(MapLoader.loadMap(this, levels.get(level)));
+        this.map = maps.get(level);
+    }
     public static void main(String[] args) {
         launch(args);
     }
-
     @Override
     public void start(Stage primaryStage) throws Exception {
-        initialModalWindow();
+        initialModalWindow(primaryStage);
+    }
+    private void initializeGame(Stage primaryStage) {
         parentStage = primaryStage;
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
 
 
-        ui.add(new Label("Health: "), 0, 0);
-        ui.add(new Label("Damage: "), 0, 1);
-        ui.add(new Label("Inventory: "), 0, 2);
+        ui.add(new Label("Name: "), 0, 0);
+        ui.add(new Label("Health: "), 0, 1);
+        ui.add(new Label("Damage: "), 0, 2);
+        ui.add(new Label("Inventory: "), 0, 3);
+        ui.add(new Label("Fight Area: "), 0, 14);
         ui.add(button, 4, 0);
-        ui.add(healthLabel, 1, 0);
-        ui.add(damageLabel, 1, 1);
-        ui.add(inventory, 1, 2);
+        ui.add(healthLabel, 1, 1);
+        ui.add(damageLabel, 1, 2);
+        ui.add(inventory, 1, 3);
+        ui.add(fight, 1, 15);
 
         BorderPane borderPane = new BorderPane();
 
@@ -90,8 +91,7 @@ public class Main extends Application {
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
     }
-
-    private void initialModalWindow() {
+    void initialModalWindow(Stage primaryStage) {
         Stage dialog = new Stage();
         HBox root = new HBox();
         Scene scene = new Scene(root, 400, 200, Color.BLACK);
@@ -106,8 +106,14 @@ public class Main extends Application {
         btnStart.setDefaultButton(true);
         btnExit.setCancelButton(true);
 
-        btnStart.setOnAction(e -> {startGame();});
-        btnExit.setOnAction(e -> {exitGame();});
+        btnStart.setOnAction(e -> {
+            startGame();
+            initializeGame(primaryStage);
+            dialog.close();
+        });
+        btnExit.setOnAction(e -> {
+            exitGame();
+            dialog.close();});
 
         root.getChildren().addAll(textField, btnStart, btnExit);
         root.setAlignment(Pos.CENTER);
@@ -119,11 +125,89 @@ public class Main extends Application {
         dialog.setTitle("Dungeon Crawl");
         dialog.showAndWait();
     }
+    public void modalWindow() {
+        Stage dialog = new Stage();
+        HBox root = new HBox();
+        Scene scene = new Scene(root, 400, 200);
+        dialog.setScene(scene);
 
+        TextField textField = new TextField();
+        Button btnSave = new Button("Save");
+        Button btnCancel = new Button("Cancel");
+
+        textField.setText("character name");
+        btnSave.setDefaultButton(true);
+        btnCancel.setCancelButton(true);
+
+        btnSave.setOnAction(e -> {
+            saveGame();
+            dialog.close();
+        });
+        btnCancel.setOnAction(e -> {
+            cancelGame();
+            dialog.close();
+        });
+
+        root.getChildren().addAll(textField, btnSave, btnCancel);
+        root.setAlignment(Pos.CENTER);
+        root.setSpacing(10);
+
+        dialog.setScene(scene);
+        dialog.initOwner(parentStage);
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.setTitle("Save Game");
+        dialog.showAndWait();
+    }
+    private void exitModalWindow() {
+        Stage dialog = new Stage();
+        HBox root = new HBox();
+        Scene scene = new Scene(root, 400, 200, Color.BLACK);
+        dialog.setScene(scene);
+
+        Button btnExit = new Button("Exit");
+        Button btnCancel = new Button("Cancel");
+
+        btnExit.setCancelButton(true);
+        btnCancel.setDefaultButton(true);
+
+        btnExit.setOnAction(e -> {
+            exitGame();
+            dialog.close();
+            Platform.exit();
+        });
+
+
+        btnCancel.setOnAction(e -> {
+            cancelGame();
+            dialog.close();
+        });
+
+
+        root.getChildren().addAll(btnExit, btnCancel);
+        root.setAlignment(Pos.CENTER);
+        root.setSpacing(10);
+
+        dialog.setScene(scene);
+        dialog.initOwner(parentStage);
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.setTitle("Dungeon Crawl");
+        dialog.showAndWait();
+    }
+    private void startGame() {
+        System.out.println("Start");
+    }
+    private void exitGame(){
+        System.out.println("Exit");
+    }
+    private void saveGame(){
+        System.out.println("Save");
+    }
+    private void cancelGame(){
+        System.out.println("Cancel");
+    }
     private void handeButtonClick(javafx.event.ActionEvent actionEvent) {
         map.getPlayer().checkPickUp();
     }
-
     private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
             case UP -> {
@@ -143,52 +227,10 @@ public class Main extends Application {
                 refresh();
             }
             case S -> modalWindow();
+            case ESCAPE -> exitModalWindow();
         }
 //        map.getMobs().forEach(Actor::move);
     }
-
-    public void modalWindow() {
-        Stage dialog = new Stage();
-        HBox root = new HBox();
-        Scene scene = new Scene(root, 400, 200);
-        dialog.setScene(scene);
-
-        TextField textField = new TextField();
-        Button btnSave = new Button("Save");
-        Button btnCancel = new Button("Cancel");
-
-        textField.setText("character name");
-        btnSave.setDefaultButton(true);
-        btnCancel.setCancelButton(true);
-
-        btnSave.setOnAction(e -> {saveGame();});
-        btnCancel.setOnAction(e -> {cancelGame();});
-
-        root.getChildren().addAll(textField, btnSave, btnCancel);
-        root.setAlignment(Pos.CENTER);
-        root.setSpacing(10);
-
-        dialog.setScene(scene);
-        dialog.initOwner(parentStage);
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.setTitle("Save Game");
-        dialog.showAndWait();
-    }
-
-    private void startGame(){
-        System.out.println("Start");
-    }
-    private void exitGame(){
-        System.out.println("Exit");
-    }
-    private void saveGame(){
-        System.out.println("Save");
-    }
-    private void cancelGame(){
-        System.out.println("Cancel");
-    }
-
-
     private void refresh() {
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());

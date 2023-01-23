@@ -20,51 +20,42 @@ public class Cell implements Drawable {
     public Cell() {
         type = CellType.EMPTY;
     }
-
     public CellType getType() {
         return type;
     }
     public void setType(CellType type) {
         this.type = type;
     }
-
     public Actor getActor() {
         return actor;
     }
     public void setActor(Actor actor) {
         this.actor = actor;
     }
-
     public Item getItem() {return item;}
     public void setItem(Item item) {
         this.item = item;
     }
-
-
     public Cell getNeighbor(int dx, int dy) {
         return gameMap.getCell(x + dx, y + dy);
     }
-
-    @Override
-    public String getTileName() {
-        return type.getTileName();
-    }
-
     public GameMap getGameMap() {
         return gameMap;
     }
-
     public int getX() {
         return x;
     }
     public int getY() {
         return y;
     }
-
     public boolean hasNeighbor(int dx, int dy){
         return x + dx >= 0
                 && x + dx < gameMap.getWidth()
                 && y + dy >= 0
                 && y + dy < gameMap.getHeight();
+    }
+    @Override
+    public String getTileName() {
+        return type.getTileName();
     }
 }

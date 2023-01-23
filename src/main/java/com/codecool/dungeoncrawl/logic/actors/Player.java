@@ -1,30 +1,39 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.items.Armor;
+import com.codecool.dungeoncrawl.logic.items.IncreasingHealth;
 import com.codecool.dungeoncrawl.logic.items.Item;
-import com.codecool.dungeoncrawl.logic.items.Weapon;
+import com.codecool.dungeoncrawl.logic.items.IncreasingDamage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends Actor {
-
-    int damage = 5;
     private List<Item> inventory = new ArrayList<Item>();
+    int damage;
+    public Player(Cell cell, int health, int damage) {
+        super(cell);
+        this.health = health;
+        this.damage = damage;
+    }
+    public Player(Cell cell, int damage) {
+        super(cell);
+        this.damage = damage;
+        this.health = 10;
+    }
     public Player(Cell cell) {
         super(cell);
     }
 
-
     public List<Item> getInventory(){
         return inventory;
     }
-
     public int getDamage(){
         return damage;
     }
-
+    public int getHealth() {
+        return health;
+    }
     public List<String> getItemNames(){
         List<String> itemNames = new ArrayList<>();
         for (Item item : inventory)
@@ -32,7 +41,6 @@ public class Player extends Actor {
         }
         return itemNames;
     }
-
     public void addToInventory(Item item){
         inventory.add(item);
     }
@@ -44,20 +52,22 @@ public class Player extends Actor {
         }
     }
     public void increaseStatistics(Item item){
-        if(item instanceof Weapon){
-            this.damage = this.damage + ((Weapon) item).getDamage();
+        if(item instanceof IncreasingDamage){
+            this.damage = this.damage + ((IncreasingDamage) item).getDamage();
         }
-        else if(item instanceof Armor){
-            this.health = this.health + ((Armor) item).getHealth();
+        else if(item instanceof IncreasingHealth){
+            this.health = this.health + ((IncreasingHealth) item).getHealth();
         }
+
     }
     public String getTileName() {
         return "player";
     }
-
     public void setAttribute(List<Item> inventory, int health,int damage){
         this.inventory = inventory;
         this.health = health;
         this.damage = damage;
     }
+
+
 }
