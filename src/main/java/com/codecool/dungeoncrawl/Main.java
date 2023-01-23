@@ -6,22 +6,21 @@ import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +37,8 @@ public class Main extends Application {
     int up = 10;
     int down = 10;
     int height = 10;
+    private Window parentStage;
+    private Actor actor;
 
     public Main() {
         maps.add(MapLoader.loadMap(this, levels.get(level)));
@@ -59,6 +60,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        initialModalWindow();
+        parentStage = primaryStage;
         GridPane ui = new GridPane();
         ui.setPrefWidth(200);
         ui.setPadding(new Insets(10));
@@ -88,39 +91,109 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    private void initialModalWindow() {
+        Stage dialog = new Stage();
+        HBox root = new HBox();
+        Scene scene = new Scene(root, 400, 200, Color.BLACK);
+        dialog.setScene(scene);
+
+
+        TextField textField = new TextField();
+        Button btnStart = new Button("Start Game");
+        Button btnExit = new Button("Exit");
+
+        textField.setText("Name");
+        btnStart.setDefaultButton(true);
+        btnExit.setCancelButton(true);
+
+        btnStart.setOnAction(e -> {startGame();});
+        btnExit.setOnAction(e -> {exitGame();});
+
+        root.getChildren().addAll(textField, btnStart, btnExit);
+        root.setAlignment(Pos.CENTER);
+        root.setSpacing(10);
+
+        dialog.setScene(scene);
+        dialog.initOwner(parentStage);
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.setTitle("Dungeon Crawl");
+        dialog.showAndWait();
+    }
+
     private void handeButtonClick(javafx.event.ActionEvent actionEvent) {
         map.getPlayer().checkPickUp();
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-            case UP:
+            case UP -> {
                 map.getPlayer().move(0, -1);
                 refresh();
-                break;
-            case DOWN:
+            }
+            case DOWN -> {
                 map.getPlayer().move(0, 1);
                 refresh();
-                break;
-            case LEFT:
+            }
+            case LEFT -> {
                 map.getPlayer().move(-1, 0);
                 refresh();
-                break;
-            case RIGHT:
+            }
+            case RIGHT -> {
                 map.getPlayer().move(1, 0);
                 refresh();
-                break;
+            }
+            case S -> modalWindow();
         }
 //        map.getMobs().forEach(Actor::move);
     }
+
+    public void modalWindow() {
+        Stage dialog = new Stage();
+        HBox root = new HBox();
+        Scene scene = new Scene(root, 400, 200);
+        dialog.setScene(scene);
+
+        TextField textField = new TextField();
+        Button btnSave = new Button("Save");
+        Button btnCancel = new Button("Cancel");
+
+        textField.setText("character name");
+        btnSave.setDefaultButton(true);
+        btnCancel.setCancelButton(true);
+
+        btnSave.setOnAction(e -> {saveGame();});
+        btnCancel.setOnAction(e -> {cancelGame();});
+
+        root.getChildren().addAll(textField, btnSave, btnCancel);
+        root.setAlignment(Pos.CENTER);
+        root.setSpacing(10);
+
+        dialog.setScene(scene);
+        dialog.initOwner(parentStage);
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.setTitle("Save Game");
+        dialog.showAndWait();
+    }
+
+    private void startGame(){
+        System.out.println("Start");
+    }
+    private void exitGame(){
+        System.out.println("Exit");
+    }
+    private void saveGame(){
+        System.out.println("Save");
+    }
+    private void cancelGame(){
+        System.out.println("Cancel");
+    }
+
 
     private void refresh() {
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         Cell playerCell = map.getPlayer().getCell();
 
-//        for (int x = 0; x < map.getWidth(); x++) {
-//            for (int y = 0; y < map.getHeight(); y++) {
         for (int x = playerCell.getX() - left; x <= playerCell.getX() + right; x++) {
             for (int y = playerCell.getY() - height; y <= playerCell.getY() + height; y++) {
                 int canvaX = x - playerCell.getX() + left;
