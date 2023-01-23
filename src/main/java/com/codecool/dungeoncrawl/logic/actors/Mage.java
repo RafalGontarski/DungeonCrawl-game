@@ -5,12 +5,12 @@ import com.codecool.dungeoncrawl.logic.GameMap;
 
 import java.util.Random;
 
-public class Skeleton extends Actor {
+public class Mage extends Actor {
     private Cell cell;
 
-    public Skeleton(Cell cell) {
+    public Mage(Cell cell) {
         super(cell);
-        this.setDamage(2);
+        this.setDamage(15);
     }
 
     public void setDamage(int damage){
@@ -18,6 +18,6 @@ public class Skeleton extends Actor {
     }
     @Override
     public String getTileName() {
-        return "skeleton";
+        return "mage";
     }
 }
