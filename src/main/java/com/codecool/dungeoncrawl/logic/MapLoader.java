@@ -1,12 +1,9 @@
 package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.Main;
-import com.codecool.dungeoncrawl.logic.actors.Mage;
-import com.codecool.dungeoncrawl.logic.actors.Player;
-import com.codecool.dungeoncrawl.logic.actors.Skeleton;
-import com.codecool.dungeoncrawl.logic.items.Lifepotion;
-import com.codecool.dungeoncrawl.logic.items.Lifepotion;
-import com.codecool.dungeoncrawl.logic.items.Sword;
+import com.codecool.dungeoncrawl.logic.actors.*;
+import com.codecool.dungeoncrawl.logic.items.*;
+//import com.codecool.dungeoncrawl.logic.items.Lifepotion;
 
 import java.io.InputStream;
 import java.util.Scanner;
@@ -44,23 +41,23 @@ public class MapLoader {
                             break;
                         case 's':
                             cell.setType(CellType.FLOOR);
-                            new Skeleton(cell);
+                            new Enemy(cell, EnemyType.Skeleton, 10, 2);
                             break;
                         case 'm':
                             cell.setType(CellType.FLOOR);
-                            new Mage(cell);
+                            new Enemy(cell, EnemyType.Mage, 10, 3);
                             break;
                         case 'a':
                             cell.setType(CellType.FLOOR);
-                            new Lifepotion(cell);
+                            new Mixture(cell, ItemType.LIFE_POTION, 5);
                             break;
                         case 'b':
                             cell.setType(CellType.FLOOR);
-                            new Sword(cell);
+                            new Equipment(cell, ItemType.SWORD, 5);
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
-                            map.setPlayer(new Player(cell));
+                            map.setPlayer(new Player(cell, 10,5));
                             break;
                         case 'd':
                             cell.setType(CellType.OPENDOOR);

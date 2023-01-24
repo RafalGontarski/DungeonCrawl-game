@@ -7,7 +7,13 @@ import com.codecool.dungeoncrawl.model.PlayerModel;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
+/**
+ * The application uses a PostgreSQL database with the schema in schema_ddl.sql
+ */
 public class GameDatabaseManager {
+    /**
+     * The application uses a PostgreSQL database with the schema in schema_ddl.sql
+     */
     private PlayerDao playerDao;
 
 //    public void setup() throws SQLException {
@@ -22,9 +28,9 @@ public class GameDatabaseManager {
 
 //    private DataSource connect() throws SQLException {
 //        PGSimpleDataSource dataSource = new PGSimpleDataSource();
-//        String dbName = "test";
-//        String user = "test";
-//        String password = "test";
+        String dbName = "dungeon_crawl2";
+        String user = "codecool";
+        String password = "codecool1";
 //
 //        dataSource.setDatabaseName(dbName);
 //        dataSource.setUser(user);

@@ -19,7 +19,16 @@ public class GameMap {
 
     private final List<CellType> obstacles = Arrays.asList(CellType.STONEWALL, CellType.CLOSEDDOOR);
 
-
+    public GameMap(int width, int height, CellType defaultCellType) {
+        this.width = width;
+        this.height = height;
+        cells = new Cell[width][height];
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                cells[x][y] = new Cell(this, x, y, defaultCellType);
+            }
+        }
+    }
     public GameMap(int width, int height, CellType defaultCellType,Main main) {
         this.width = width;
         this.height = height;
