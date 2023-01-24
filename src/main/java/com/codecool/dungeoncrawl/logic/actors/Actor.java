@@ -1,15 +1,18 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
+import com.codecool.dungeoncrawl.Main;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Drawable;
+import javafx.stage.Stage;
 
 public abstract class Actor implements Drawable {
     protected Cell cell;
-    int health = 10;
-    int damage;
+    protected int health;
+    protected int damage;
+    private Stage primaryStage;
 
-    public Actor(Cell cell) {
+    protected Actor(Cell cell) {
         this.cell = cell;
         this.cell.setActor(this);
     }
@@ -39,13 +42,9 @@ public abstract class Actor implements Drawable {
         }
     }
 
-
-
-
     public int getHealth() {
         return health;
     }
-
     public int getDamage() { return damage;}
 
     public Cell getCell() {
@@ -62,21 +61,27 @@ public abstract class Actor implements Drawable {
 
     public void attack(Actor enemy){
         enemy.health -= this.getDamage();
-        System.out.println(this.getClass().getSimpleName() + " : " + this.health);
-        System.out.println(enemy.getClass().getSimpleName() + " : " + enemy.health);
+        System.out.println(this.getTileName() + " : " + this.health);
+        System.out.println(enemy.getTileName() + " : " + enemy.health);
     }
-
     public void fight(Actor enemy) {
-        System.out.println(enemy);
-        System.out.println(this.getClass().getSimpleName() + " vs " + enemy.getClass().getSimpleName());
+//        System.out.println(enemy);
+        System.out.println(this.getTileName() + " vs " + enemy.getTileName());
         attack(enemy);
         enemy.attack(this);
+
         if (enemy.health <= 0){
             removeActorFromMap(enemy.getCell());
         }
         if(this.health <= 0){
+            isDead(primaryStage);
             removeActorFromMap(this.getCell());
         }
+    }
+
+    private void isDead(Stage primaryStage) {
+        Main main = new Main();
+        main.deadModalWindow(primaryStage);
     }
 
     public void removeActorFromMap(Cell cell){
