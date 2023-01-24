@@ -5,11 +5,9 @@ public enum EnemyType {
     Skeleton("skeleton");
 
     private String enemyName;
-
     EnemyType(String enemyName) {
         this.enemyName = enemyName;
     }
-
     public String getEnemyName() {
         return enemyName;
     }

@@ -53,7 +53,7 @@ public class MapLoader {
                             break;
                         case 'b':
                             cell.setType(CellType.FLOOR);
-                            new Weapon(cell, ItemType.SWORD, 5);
+                            new Equipment(cell, ItemType.SWORD, 5);
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);

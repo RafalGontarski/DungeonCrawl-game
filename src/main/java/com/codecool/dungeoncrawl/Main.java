@@ -3,7 +3,6 @@ package com.codecool.dungeoncrawl;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
-import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -91,12 +90,16 @@ public class Main extends Application {
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
     }
+    /**
+     * When the user run game,
+     * a modal window pops up with a text input field (labelled Name) and two buttons,
+     * Start Game and Exit.
+     */
     void initialModalWindow(Stage primaryStage) {
         Stage dialog = new Stage();
         HBox root = new HBox();
-        Scene scene = new Scene(root, 400, 200, Color.BLACK);
+        Scene scene = new Scene(root, 300, 100);
         dialog.setScene(scene);
-
 
         TextField textField = new TextField();
         Button btnStart = new Button("Start Game");
@@ -125,7 +128,12 @@ public class Main extends Application {
         dialog.setTitle("Dungeon Crawl");
         dialog.showAndWait();
     }
-    public void modalWindow() {
+    /**
+     * When the user presses Ctrl+S,
+     * a modal window pops up with a text input field (labelled Name) and two buttons,
+     * Save and Cancel.
+     */
+    public void saveModalWindow() {
         Stage dialog = new Stage();
         HBox root = new HBox();
         Scene scene = new Scene(root, 400, 200);
@@ -158,10 +166,15 @@ public class Main extends Application {
         dialog.setTitle("Save Game");
         dialog.showAndWait();
     }
+    /**
+     * When the user presses Esc,
+     * a modal window pops up with a text input field (labelled Name) and two buttons,
+     * Exit and Cancel.
+     */
     private void exitModalWindow() {
         Stage dialog = new Stage();
         HBox root = new HBox();
-        Scene scene = new Scene(root, 400, 200, Color.BLACK);
+        Scene scene = new Scene(root, 300, 100);
         dialog.setScene(scene);
 
         Button btnExit = new Button("Exit");
@@ -193,6 +206,44 @@ public class Main extends Application {
         dialog.setTitle("Dungeon Crawl");
         dialog.showAndWait();
     }
+    /**
+     * When the user health is under zero,
+     * a modal window pops up with a text input field (labelled Name) and two buttons,
+     * Exit and Try Again.
+     */
+    public void deadModalWindow(Stage primaryStage) {
+        Stage dialog = new Stage();
+        HBox root = new HBox();
+        Scene scene = new Scene(root, 350, 100);
+        dialog.setScene(scene);
+
+        Button btnExit = new Button("Exit");
+        Button btnStartAgain = new Button("Try Again");
+
+        btnExit.setCancelButton(true);
+        btnStartAgain.setDefaultButton(true);
+
+        btnExit.setOnAction(e -> {
+            exitGame();
+            dialog.close();
+            Platform.exit();
+        });
+        btnStartAgain.setOnAction(e -> {
+            startGame();
+            dialog.close();
+        });
+
+        root.getChildren().addAll(btnExit, btnStartAgain);
+        root.setAlignment(Pos.CENTER);
+        root.setSpacing(10);
+
+        dialog.setScene(scene);
+        dialog.initOwner(parentStage);
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.setTitle("Dungeon Crawl");
+        dialog.showAndWait();
+    }
+
     private void startGame() {
         System.out.println("Start");
     }
@@ -226,7 +277,7 @@ public class Main extends Application {
                 map.getPlayer().move(1, 0);
                 refresh();
             }
-            case S -> modalWindow();
+            case S -> saveModalWindow();
             case ESCAPE -> exitModalWindow();
         }
 //        map.getMobs().forEach(Actor::move);

@@ -2,16 +2,16 @@ package com.codecool.dungeoncrawl.logic.items;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 
-public class Weapon extends Item implements IncreasingDamage{
+public class Equipment extends Item implements IncreasingDamage{
 
     private ItemType itemType;
     private int damage;
 
-    public Weapon(Cell cell, ItemType itemType) {
+    public Equipment(Cell cell, ItemType itemType) {
         super(cell);
         this.itemType = itemType;
     }
-    public Weapon(Cell cell, ItemType itemType, int increasingDamageValue) {
+    public Equipment(Cell cell, ItemType itemType, int increasingDamageValue) {
         super(cell);
         this.itemType = itemType;
         this.damage = increasingDamageValue;
