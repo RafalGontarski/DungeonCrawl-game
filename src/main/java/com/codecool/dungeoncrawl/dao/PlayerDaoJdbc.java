@@ -26,6 +26,9 @@ public class PlayerDaoJdbc implements PlayerDao {
             ResultSet resultSet = statement.getGeneratedKeys();
             resultSet.next();
             player.setId(resultSet.getInt(1));
+            // check player ID
+            int id = player.getId();
+            System.out.println(id);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -41,6 +44,8 @@ public class PlayerDaoJdbc implements PlayerDao {
             statement.setInt(3, player.getX());
             statement.setInt(4, player.getY());
             statement.setInt(5, player.getId());
+
+            System.out.println(player.getId());
             statement.executeUpdate();
         }   catch (SQLException e) {
             throw new RuntimeException(e);

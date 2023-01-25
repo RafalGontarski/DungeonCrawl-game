@@ -5,10 +5,12 @@ import com.codecool.dungeoncrawl.logic.items.IncreasingHealth;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.logic.items.IncreasingDamage;
 
+import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends Actor {
+    DataSource dataSource;
     private List<Item> inventory = new ArrayList<Item>();
     int damage;
     private String name;
@@ -80,4 +82,5 @@ public class Player extends Actor {
         }
 
     }
+
 }

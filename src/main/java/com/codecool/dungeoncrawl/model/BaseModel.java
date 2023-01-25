@@ -7,6 +7,7 @@ public class BaseModel {
     protected Integer id;
 
     public int getId() {
+        System.out.println(id);
         return id;
     }
 
