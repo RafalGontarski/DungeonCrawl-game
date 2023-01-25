@@ -27,61 +27,38 @@ public class MapLoader {
                 if (x < line.length()) {
                     Cell cell = map.getCell(x, y);
                     switch (line.charAt(x)) {
-                        case ' ':
-                            cell.setType(CellType.EMPTY);
-                            break;
-                        case '#':
-                            cell.setType(CellType.STONEWALL);
-                            break;
-                        case '.':
-                            cell.setType(CellType.FLOOR);
-                            break;
-                        case 'c':
-                            cell.setType(CellType.CLOSEDDOOR);
-                            break;
-                        case 's':
+                        case ' ' -> cell.setType(CellType.EMPTY);
+                        case '#' -> cell.setType(CellType.STONEWALL);
+                        case '.' -> cell.setType(CellType.FLOOR);
+                        case 'c' -> cell.setType(CellType.CLOSEDDOOR);
+                        case 'd' -> cell.setType(CellType.OPENDOOR);
+                        case '^' -> cell.setType(CellType.UPSTAIRS);
+                        case 'v' -> cell.setType(CellType.DOWNSTAIRS);
+                        case '%' -> cell.setType(CellType.MAPLEWALL);
+                        case 'w' -> cell.setType(CellType.MAPLEWINDOW);
+                        case 't' -> cell.setType(CellType.TORCH);
+                        case '+' -> cell.setType(CellType.STONEFLOOR);
+                        case 's' -> {
                             cell.setType(CellType.FLOOR);
                             new Enemy(cell, EnemyType.Skeleton, 10, 2);
-                            break;
-                        case 'm':
+                        }
+                        case 'm' -> {
                             cell.setType(CellType.FLOOR);
                             new Enemy(cell, EnemyType.Mage, 10, 3);
-                            break;
-                        case 'a':
+                        }
+                        case 'a' -> {
                             cell.setType(CellType.FLOOR);
                             new Mixture(cell, ItemType.LIFE_POTION, 5);
-                            break;
-                        case 'b':
+                        }
+                        case 'b' -> {
                             cell.setType(CellType.FLOOR);
                             new Equipment(cell, ItemType.SWORD, 5);
-                            break;
-                        case '@':
+                        }
+                        case '@' -> {
                             cell.setType(CellType.FLOOR);
-                            map.setPlayer(new Player(cell, 10,5));
-                            break;
-                        case 'd':
-                            cell.setType(CellType.OPENDOOR);
-                            break;
-                        case '^':
-                            cell.setType(CellType.UPSTAIRS);
-                            break;
-                        case 'v':
-                            cell.setType(CellType.DOWNSTAIRS);
-                            break;
-                        case '%':
-                            cell.setType(CellType.MAPLEWALL);
-                            break;
-                        case 'w':
-                            cell.setType(CellType.MAPLEWINDOW);
-                            break;
-                        case 't':
-                            cell.setType(CellType.TORCH);
-                            break;
-                        case '+':
-                            cell.setType(CellType.STONEFLOOR);
-                            break;
-                        default:
-                            throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
+                            map.setPlayer(new Player(cell, 10, 5));
+                        }
+                        default -> throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
                     }
                 }
             }

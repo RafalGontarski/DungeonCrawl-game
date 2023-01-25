@@ -33,7 +33,10 @@ import java.util.List;
 public class Main extends Application {
     GameMap map;
     DataSource dataSource;
+    Label playerName = new Label();
     GameDatabaseManager gameDatabaseManager;
+
+    TextField textField = new TextField();
     List<GameMap> maps = new ArrayList<>();
     List<String> levels = Arrays.asList("/map.txt","/map2.txt","/map3.txt");
     int level;
@@ -51,9 +54,6 @@ public class Main extends Application {
     Label damageLabel = new Label();
     Label inventory = new Label();
     Label fight = new Label();
-//    Button button = new Button("Pick up");
-
-    Label playerName;
 
     public Main() {
         maps.add(MapLoader.loadMap(this, levels.get(level)));
@@ -78,7 +78,6 @@ public class Main extends Application {
         ui.add(new Label("Damage: "), 0, 2);
         ui.add(new Label("Inventory: "), 0, 3);
         ui.add(new Label("Fight Area: "), 0, 14);
-//        ui.add(button, 4, 0);
         ui.add(playerName, 1, 0);
         ui.add(healthLabel, 1, 1);
         ui.add(damageLabel, 1, 2);
@@ -95,7 +94,6 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
-//        button.setOnAction(this::handeButtonClick);
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
@@ -113,9 +111,6 @@ public class Main extends Application {
         dialog.setScene(scene);
 
         Label labelfirst= new Label("Name:    ");
-        playerName = new Label();
-
-        TextField textField = new TextField();
         Button btnStart = new Button("Start Game");
         Button btnExit = new Button("Exit");
 
@@ -125,25 +120,6 @@ public class Main extends Application {
 
         btnStart.setOnAction(e -> {
             startGame();
-            playerName.setText(textField.getText());
-
-            Player player = new Player(
-                    playerName.getText(),
-                    map.getPlayer().getCell(),
-                    map.getPlayer().getHealth(),
-                    map.getPlayer().getDamage());
-
-            PlayerModel playerModel = new PlayerModel(player);
-            playerModel.setPlayerName(playerName.getText());
-            gameDatabaseManager = new GameDatabaseManager();
-
-            try {
-                gameDatabaseManager.setup();
-                gameDatabaseManager.savePlayer(player);
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-
             initializeGame(primaryStage);
             dialog.close();
         });
@@ -171,7 +147,6 @@ public class Main extends Application {
         Scene scene = new Scene(root, 400, 200);
         dialog.setScene(scene);
 
-        TextField textField = new TextField();
         Button btnSave = new Button("Save");
         Button btnCancel = new Button("Cancel");
 
@@ -179,8 +154,10 @@ public class Main extends Application {
         btnSave.setDefaultButton(true);
         btnCancel.setCancelButton(true);
 
+
         btnSave.setOnAction(e -> {
-            saveGame();
+            PlayerModel playerModel = startGame();
+            saveGame(playerModel);
             dialog.close();
         });
         btnCancel.setOnAction(e -> {
@@ -276,13 +253,47 @@ public class Main extends Application {
         dialog.showAndWait();
     }
 
-    private void startGame() {
+    private PlayerModel startGame() {
+
+        Player player = new Player(
+                playerName.getText(),
+                map.getPlayer().getCell(),
+                map.getPlayer().getHealth(),
+                map.getPlayer().getDamage());
+
+        PlayerModel playerModel = new PlayerModel(player);
+
+        playerName.setText(textField.getText());
+        playerModel.setPlayerName(playerName.getText());
+        gameDatabaseManager = new GameDatabaseManager();
+
+        try {
+            gameDatabaseManager.setup();
+            gameDatabaseManager.savePlayer(playerModel);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
         System.out.println("Start");
+        int id = playerModel.getId();
+        System.out.println(playerModel);
+
+        return playerModel;
     }
     private void exitGame(){
         System.out.println("Exit");
     }
-    private void saveGame(){
+    private void saveGame(PlayerModel playerModel){
+
+        playerName.setText(textField.getText());
+        playerModel.setPlayerName(playerName.getText());
+        gameDatabaseManager = new GameDatabaseManager();
+
+        try {
+            gameDatabaseManager.setup();
+            gameDatabaseManager.updatePlayer(playerModel);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
         System.out.println("Save");
     }
     private void cancelGame(){
@@ -344,7 +355,7 @@ public class Main extends Application {
             healthLabel.setText("" + map.getPlayer().getHealth());
             damageLabel.setText("" + map.getPlayer().getDamage());
             inventory.setText("" + map.getPlayer().getItemNames());
-//            button.setFocusTraversable(false);
+
         }
     }
     public void addMap(GameMap map){
