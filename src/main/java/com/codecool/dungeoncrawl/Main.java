@@ -1,9 +1,12 @@
 package com.codecool.dungeoncrawl;
 
+import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
+import com.codecool.dungeoncrawl.dao.PlayerDaoJdbc;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Player;
+import com.codecool.dungeoncrawl.model.PlayerModel;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -21,12 +24,16 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Main extends Application {
     GameMap map;
+    DataSource dataSource;
+    GameDatabaseManager gameDatabaseManager;
     List<GameMap> maps = new ArrayList<>();
     List<String> levels = Arrays.asList("/map.txt","/map2.txt","/map3.txt");
     int level;
@@ -44,7 +51,9 @@ public class Main extends Application {
     Label damageLabel = new Label();
     Label inventory = new Label();
     Label fight = new Label();
-    Button button = new Button("Pick up");
+//    Button button = new Button("Pick up");
+
+    Label playerName;
 
     public Main() {
         maps.add(MapLoader.loadMap(this, levels.get(level)));
@@ -69,7 +78,8 @@ public class Main extends Application {
         ui.add(new Label("Damage: "), 0, 2);
         ui.add(new Label("Inventory: "), 0, 3);
         ui.add(new Label("Fight Area: "), 0, 14);
-        ui.add(button, 4, 0);
+//        ui.add(button, 4, 0);
+        ui.add(playerName, 1, 0);
         ui.add(healthLabel, 1, 1);
         ui.add(damageLabel, 1, 2);
         ui.add(inventory, 1, 3);
@@ -85,11 +95,12 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
-        button.setOnAction(this::handeButtonClick);
+//        button.setOnAction(this::handeButtonClick);
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
     }
+
     /**
      * When the user run game,
      * a modal window pops up with a text input field (labelled Name) and two buttons,
@@ -98,8 +109,11 @@ public class Main extends Application {
     void initialModalWindow(Stage primaryStage) {
         Stage dialog = new Stage();
         HBox root = new HBox();
-        Scene scene = new Scene(root, 300, 100);
+        Scene scene = new Scene(root, 400, 100);
         dialog.setScene(scene);
+
+        Label labelfirst= new Label("Name:    ");
+        playerName = new Label();
 
         TextField textField = new TextField();
         Button btnStart = new Button("Start Game");
@@ -111,6 +125,25 @@ public class Main extends Application {
 
         btnStart.setOnAction(e -> {
             startGame();
+            playerName.setText(textField.getText());
+
+            Player player = new Player(
+                    playerName.getText(),
+                    map.getPlayer().getCell(),
+                    map.getPlayer().getHealth(),
+                    map.getPlayer().getDamage());
+
+            PlayerModel playerModel = new PlayerModel(player);
+            playerModel.setPlayerName(playerName.getText());
+            gameDatabaseManager = new GameDatabaseManager();
+
+            try {
+                gameDatabaseManager.setup();
+                gameDatabaseManager.savePlayer(player);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
             initializeGame(primaryStage);
             dialog.close();
         });
@@ -118,9 +151,8 @@ public class Main extends Application {
             exitGame();
             dialog.close();});
 
-        root.getChildren().addAll(textField, btnStart, btnExit);
+        root.getChildren().addAll(labelfirst, textField, btnStart, btnExit, playerName);
         root.setAlignment(Pos.CENTER);
-        root.setSpacing(10);
 
         dialog.setScene(scene);
         dialog.initOwner(parentStage);
@@ -279,6 +311,10 @@ public class Main extends Application {
             }
             case S -> saveModalWindow();
             case ESCAPE -> exitModalWindow();
+            case SPACE -> {
+                map.getPlayer().checkPickUp();
+                refresh();
+            }
         }
 //        map.getMobs().forEach(Actor::move);
     }
@@ -308,7 +344,7 @@ public class Main extends Application {
             healthLabel.setText("" + map.getPlayer().getHealth());
             damageLabel.setText("" + map.getPlayer().getDamage());
             inventory.setText("" + map.getPlayer().getItemNames());
-            button.setFocusTraversable(false);
+//            button.setFocusTraversable(false);
         }
     }
     public void addMap(GameMap map){

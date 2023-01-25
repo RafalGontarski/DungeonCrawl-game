@@ -11,6 +11,9 @@ import java.util.List;
 public class Player extends Actor {
     private List<Item> inventory = new ArrayList<Item>();
     int damage;
+    private String name;
+
+
     public Player(Cell cell) {
         super(cell);
     }
@@ -24,7 +27,16 @@ public class Player extends Actor {
         this.health = health;
         this.damage = damage;
     }
+    public Player(String name, Cell cell, int health, int damage) {
+        super(cell);
+        this.name = name;
+        this.health = health;
+        this.damage = damage;
+    }
 
+    public String getName() {
+        return name;
+    }
     public int getDamage(){
         return damage;
     }
@@ -68,6 +80,4 @@ public class Player extends Actor {
         }
 
     }
-
-
 }
