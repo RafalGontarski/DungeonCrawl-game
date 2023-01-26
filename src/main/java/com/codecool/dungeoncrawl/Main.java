@@ -10,6 +10,8 @@ import com.codecool.dungeoncrawl.model.GameState;
 import com.codecool.dungeoncrawl.model.PlayerModel;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -28,16 +30,20 @@ import javafx.scene.text.Text;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.sql.Date;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+//import java.util.Date;
 import java.util.List;
 
 public class Main extends Application {
     GameMap map;
     Label playerName = new Label();
-    GameState gameState;
     Player player;
     PlayerModel playerModel;
+    GameState gameState;
     GameDatabaseManager gameDatabaseManager;
     TextField textField = new TextField();
     List<GameMap> maps = new ArrayList<>();
@@ -57,6 +63,9 @@ public class Main extends Application {
     Label damageLabel = new Label();
     Label inventory = new Label();
     Label fight = new Label();
+
+    java.util.Date date = new java.util.Date();
+    java.sql.Date sqlDate = new Date(date.getTime());
 
     public Main() {
         maps.add(MapLoader.loadMap(this, levels.get(level)));
@@ -109,27 +118,42 @@ public class Main extends Application {
     void initialModalWindow(Stage primaryStage) {
         Stage dialog = new Stage();
         HBox root = new HBox();
-        Scene scene = new Scene(root, 400, 100);
+        Scene scene = new Scene(root, 600, 100);
         dialog.setScene(scene);
 
         Label labelfirst= new Label("Name:    ");
         Button btnStart = new Button("Start Game");
         Button btnExit = new Button("Exit");
+        Button btnLoad = new Button("Load");
 
         textField.setText("Name");
         btnStart.setDefaultButton(true);
+        btnLoad.setDefaultButton(true);
         btnExit.setCancelButton(true);
+
+
+//applying methods
+        TitledPane tp = new TitledPane();
+        tp.setText("Load Character");
+//        tp.add(new Text("Name"));
+        tp.setContent(btnLoad);
 
         btnStart.setOnAction(e -> {
             startGame(textField.getText());
             initializeGame(primaryStage);
             dialog.close();
         });
+
+        btnLoad.setOnAction(e -> {
+            loadGame();
+//            dialog.close();
+        });
+
         btnExit.setOnAction(e -> {
             exitGame();
             dialog.close();});
 
-        root.getChildren().addAll(labelfirst, textField, btnStart, btnExit, playerName);
+        root.getChildren().addAll(labelfirst, textField, tp, btnStart, btnExit, playerName);
         root.setAlignment(Pos.CENTER);
 
         dialog.setScene(scene);
@@ -138,6 +162,11 @@ public class Main extends Application {
         dialog.setTitle("Dungeon Crawl");
         dialog.showAndWait();
     }
+
+    private void loadGame() {
+        System.out.println("Loading..");
+    }
+
     /**
      * When the user presses Ctrl+S,
      * a modal window pops up with a text input field (labelled Name) and two buttons,
@@ -158,7 +187,7 @@ public class Main extends Application {
 
 
         btnSave.setOnAction(e -> {
-            saveGame(playerModel);
+            saveGame(gameState, playerModel);
             dialog.close();
         });
         btnCancel.setOnAction(e -> {
@@ -263,15 +292,17 @@ public class Main extends Application {
                 map.getPlayer().getDamage());
 
         playerModel = new PlayerModel(player);
-
+//        playerModel = new PlayerModel(name, map.getPlayer().getX(), map.getPlayer().getY());
         playerModel.setPlayerName(name);
 
-
+//        GameState gameState1 = new GameState();
+        gameState = new GameState(levels.get(level), sqlDate, playerModel);
         gameDatabaseManager = new GameDatabaseManager();
 
         try {
             gameDatabaseManager.setup();
             gameDatabaseManager.savePlayer(playerModel);
+            gameDatabaseManager.saveState(gameState);
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
@@ -285,7 +316,7 @@ public class Main extends Application {
     private void exitGame(){
         System.out.println("Exit");
     }
-    private void saveGame(PlayerModel playerModel){
+    private void saveGame(GameState gameState, PlayerModel playerModel){
 
         playerName.setText(textField.getText());
         playerModel.setPlayerName(playerName.getText());
@@ -294,6 +325,7 @@ public class Main extends Application {
         try {
             gameDatabaseManager.setup();
             gameDatabaseManager.updatePlayer(playerModel);
+            gameDatabaseManager.updateState(gameState);
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
@@ -395,7 +427,11 @@ public class Main extends Application {
             healthLabel.setText("" + map.getPlayer().getHealth());
             damageLabel.setText("" + map.getPlayer().getDamage());
             inventory.setText("" + map.getPlayer().getItemNames());
-
+            playerModel.setHp(map.getPlayer().getHealth());
+            playerModel.setX(map.getPlayer().getX());
+            playerModel.setY(map.getPlayer().getY());
+            gameState.setCurrentMap(levels.get(level));
+            gameState.setSavedAt(sqlDate);
         }
     }
     public void addMap(GameMap map){

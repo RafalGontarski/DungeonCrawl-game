@@ -16,8 +16,8 @@ public class GameDatabaseManager {
     /**
      * The application uses a PostgreSQL database with the schema in schema_ddl.sql
      */
-    private PlayerDao playerDao;
-    private GameStateDao gameStateDao;
+    private PlayerDaoJdbc playerDao;
+    private GameStateDaoJdbc gameStateDao;
 
     public void setup() throws SQLException {
         DataSource dataSource = connect();
