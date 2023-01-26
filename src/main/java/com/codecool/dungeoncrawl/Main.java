@@ -6,6 +6,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Player;
+import com.codecool.dungeoncrawl.model.GameState;
 import com.codecool.dungeoncrawl.model.PlayerModel;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -23,6 +24,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.scene.text.Text;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -32,10 +34,11 @@ import java.util.List;
 
 public class Main extends Application {
     GameMap map;
-    DataSource dataSource;
     Label playerName = new Label();
+    GameState gameState;
+    Player player;
+    PlayerModel playerModel;
     GameDatabaseManager gameDatabaseManager;
-
     TextField textField = new TextField();
     List<GameMap> maps = new ArrayList<>();
     List<String> levels = Arrays.asList("/map.txt","/map2.txt","/map3.txt");
@@ -98,7 +101,6 @@ public class Main extends Application {
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
     }
-
     /**
      * When the user run game,
      * a modal window pops up with a text input field (labelled Name) and two buttons,
@@ -119,7 +121,7 @@ public class Main extends Application {
         btnExit.setCancelButton(true);
 
         btnStart.setOnAction(e -> {
-            startGame();
+            startGame(textField.getText());
             initializeGame(primaryStage);
             dialog.close();
         });
@@ -156,7 +158,6 @@ public class Main extends Application {
 
 
         btnSave.setOnAction(e -> {
-            PlayerModel playerModel = startGame();
             saveGame(playerModel);
             dialog.close();
         });
@@ -238,7 +239,7 @@ public class Main extends Application {
             Platform.exit();
         });
         btnStartAgain.setOnAction(e -> {
-            startGame();
+            startGame(textField.getText());
             dialog.close();
         });
 
@@ -252,19 +253,20 @@ public class Main extends Application {
         dialog.setTitle("Dungeon Crawl");
         dialog.showAndWait();
     }
+    private void startGame(String name) {
+        playerName.setText(name);
 
-    private PlayerModel startGame() {
-
-        Player player = new Player(
+        player = new Player(
                 playerName.getText(),
                 map.getPlayer().getCell(),
                 map.getPlayer().getHealth(),
                 map.getPlayer().getDamage());
 
-        PlayerModel playerModel = new PlayerModel(player);
+        playerModel = new PlayerModel(player);
 
-        playerName.setText(textField.getText());
-        playerModel.setPlayerName(playerName.getText());
+        playerModel.setPlayerName(name);
+
+
         gameDatabaseManager = new GameDatabaseManager();
 
         try {
@@ -273,11 +275,12 @@ public class Main extends Application {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
-        System.out.println("Start");
-        int id = playerModel.getId();
-        System.out.println(playerModel);
-
-        return playerModel;
+    }
+    private void no() {
+        System.out.println("No");
+    }
+    private void yes() {
+        System.out.println("Yes");
     }
     private void exitGame(){
         System.out.println("Exit");
@@ -294,6 +297,43 @@ public class Main extends Application {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
+
+        Stage dialog = new Stage();
+//        HBox root = new HBox();
+        GridPane root = new GridPane();
+        Scene scene = new Scene(root, 400, 100);
+        dialog.setScene(scene);
+
+        Button btnYes = new Button("Yes");
+        Button btnNo = new Button("No");
+
+        btnYes.setDefaultButton(true);
+        btnNo.setCancelButton(true);
+
+
+        btnYes.setOnAction(e -> {
+            yes();
+            dialog.close();
+        });
+        btnNo.setOnAction(e -> {
+            no();
+            dialog.close();
+        });
+        root.setAlignment(Pos.BASELINE_CENTER);
+
+        Text text = new Text("Would you like to overwrite the already existing state?");
+        root.add(text, 0, 4);
+        root.add(btnYes, 0,2);
+        root.add(btnNo, 1, 2);
+//        root.getChildren().addAll(text, btnYes, btnNo);
+//        root.setSpacing(10);
+        dialog.setScene(scene);
+        dialog.initOwner(parentStage);
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.setTitle("Save Game");
+
+        dialog.showAndWait();
+
         System.out.println("Save");
     }
     private void cancelGame(){

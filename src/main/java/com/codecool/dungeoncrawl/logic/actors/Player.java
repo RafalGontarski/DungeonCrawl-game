@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends Actor {
-    DataSource dataSource;
     private List<Item> inventory = new ArrayList<Item>();
     int damage;
     private String name;
